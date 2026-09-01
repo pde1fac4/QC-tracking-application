@@ -60,7 +60,7 @@
             transition: background-color 0.3s, border-color 0.3s;
         }
 
-        .header-left { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+        .header-left { display: flex; align-items: center; gap: 6px; }
         .icon-btn {
             background-color: var(--input-bg); border: 1px solid var(--border);
             color: var(--text-main); padding: 6px 10px; border-radius: 8px;
@@ -69,11 +69,8 @@
         }
         .icon-btn:hover { border-color: var(--primary); }
 
-        .app-title {
-            font-size: 16px; font-weight: 700; margin: 0; min-width: 0; flex: 1 1 auto;
-            overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 8px;
-        }
-        .step-indicator { font-size: 15px; color: var(--primary); font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+        .app-title { font-size: 16px; font-weight: 700; margin: 0; }
+        .step-indicator { font-size: 15px; color: var(--primary); font-weight: 700; }
         .progress-container { height: 4px; background-color: var(--border); width: 100%; }
         .progress-bar { height: 100%; background-color: var(--primary); width: 14.28%; transition: width 0.3s ease; }
 
@@ -194,73 +191,6 @@
             line-height: 1.3; overflow-wrap: break-word; flex: 1; min-width: 0;
         }
 
-        /* หน้าที่ 8: แดชบอร์ด QC แบบเรียลไทม์ */
-        .dashboard-view { display: none; flex-direction: column; min-height: 0; }
-        .dashboard-view.active { display: flex; }
-        .dashboard-card { max-height: 100%; }
-
-        .dash-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-        .dash-header .icon-btn { width: 36px; padding: 0; font-size: 15px; }
-
-        .dash-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 12px; font-size: 12px; color: var(--text-muted); }
-        .dash-live-dot {
-            width: 8px; height: 8px; border-radius: 50%; background-color: var(--pass-color); flex-shrink: 0;
-            box-shadow: 0 0 0 0 rgba(40,167,69,0.6); animation: dashPulse 2s infinite;
-        }
-        .dash-live-dot.offline { background-color: var(--error); animation: none; box-shadow: none; }
-        @keyframes dashPulse {
-            0% { box-shadow: 0 0 0 0 rgba(40,167,69,0.5); }
-            70% { box-shadow: 0 0 0 6px rgba(40,167,69,0); }
-            100% { box-shadow: 0 0 0 0 rgba(40,167,69,0); }
-        }
-
-        .dash-error {
-            background-color: rgba(255,68,68,0.12); border: 1px solid var(--error); color: var(--error);
-            font-size: 12.5px; font-weight: 600; border-radius: 9px; padding: 8px 10px; margin-bottom: 12px; line-height: 1.4;
-        }
-
-        .dash-kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
-        .dash-kpi {
-            background-color: var(--input-bg); border: 1px solid var(--border); border-radius: 10px;
-            padding: 10px 12px; text-align: center;
-        }
-        .dash-kpi-value { font-size: 22px; font-weight: 700; color: var(--primary); line-height: 1.2; }
-        .dash-kpi-label { font-size: 11.5px; font-weight: 700; color: var(--text-muted); margin-top: 2px; }
-
-        .dash-section-title {
-            font-size: 13px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;
-            letter-spacing: 0.3px; margin: 14px 0 8px;
-        }
-        .dash-section-title:first-of-type { margin-top: 0; }
-
-        .dash-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-        .dash-bar-label { flex: 0 0 32px; font-size: 12.5px; font-weight: 700; color: var(--text-muted); }
-        .dash-bar-track {
-            flex: 1; height: 14px; background-color: var(--input-bg); border: 1px solid var(--border);
-            border-radius: 7px; overflow: hidden;
-        }
-        .dash-bar-fill { height: 100%; border-radius: 6px; transition: width 0.4s ease; }
-        .dash-bar-fill.pass { background-color: var(--pass-color); }
-        .dash-bar-fill.th { background-color: var(--primary); }
-        .dash-bar-count { flex: 0 0 52px; font-size: 12px; font-weight: 700; color: var(--text-main); text-align: right; }
-
-        .dash-recent { display: flex; flex-direction: column; gap: 6px; }
-        .dash-record {
-            display: flex; justify-content: space-between; align-items: center; gap: 8px;
-            background-color: var(--input-bg); border: 1px solid var(--border); border-radius: 9px; padding: 8px 10px;
-        }
-        .dr-main { flex: 1; min-width: 0; }
-        .dr-job { font-size: 13px; font-weight: 700; color: var(--text-main); overflow-wrap: break-word; }
-        .dr-date { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-top: 1px; }
-        .dr-status { display: flex; gap: 4px; flex-shrink: 0; }
-        .dr-pill {
-            font-size: 10.5px; font-weight: 700; padding: 3px 7px; border-radius: 20px; color: #FFFFFF; white-space: nowrap;
-        }
-        .dr-pill.pass { background-color: var(--pass-color); }
-        .dr-pill.fail { background-color: var(--fail-color); }
-        .dr-pill.unknown { background-color: var(--border); color: var(--text-muted); }
-        .dash-empty { font-size: 13px; color: var(--text-muted); text-align: center; padding: 12px 0; }
-
         .bottom-bar {
             background-color: var(--card-bg); padding: 10px 16px;
             display: flex; justify-content: center; border-top: 1px solid var(--border); flex-shrink: 0;
@@ -328,13 +258,12 @@
         <div class="header-left">
             <button type="button" class="icon-btn" onclick="goHome()" title="หน้าแรก">🏠</button>
             <button type="button" class="icon-btn" id="themeToggleBtn" onclick="toggleTheme()" title="สลับโหมด">🌙</button>
-            <button type="button" class="icon-btn" id="dashboardBtn" onclick="openDashboard()" title="แดชบอร์ด">📊</button>
         </div>
         <h1 class="app-title">QC tracking application</h1>
         <span class="step-indicator" id="stepIndicator">1/7</span>
     </div>
-
-    <div class="progress-container" id="progressContainer">
+    
+    <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
     </div>
 
@@ -374,12 +303,12 @@
             <div class="card">
                 <div class="section-title">1. ข้อมูลบ่อชุบ / ล้าง</div>
                 <div class="grid-2">
-                    <div class="form-group"><label>B1 บ่อที่ 1 (ล้างคราบไขมัน)&nbsp;*</label><input type="number" step="any" inputmode="decimal" name="B1 บ่อที่1 (ล้างคราบไขมัน)" placeholder="ค่า B1"></div>
-                    <div class="form-group"><label>B2 บ่อที่ 2 (น้ำเปล่า)&nbsp;*</label><input type="number" step="any" inputmode="decimal" name="B2 บ่อที่ 2 (น้ำเปล่า)" placeholder="ค่า B2"></div>
-                    <div class="form-group"><label>B3 บ่อที่ 3 (น้ำเปล่า)&nbsp;*</label><input type="number" step="any" inputmode="decimal" name="B3 บ่อที่ 3 (น้ำเปล่า)" placeholder="ค่า B3"></div>
-                    <div class="form-group"><label>B4 บ่อที่ 4 (เคลือบเซอร์โคเนียม)&nbsp;*</label><input type="number" step="any" inputmode="decimal" name="B4 บ่อที่ 4 (เคลือบเซอร์โคเนียม)" placeholder="ค่า B4"></div>
-                    <div class="form-group"><label>B5 บ่อที่ 5 (น้ำเปล่า)&nbsp;*</label><input type="number" step="any" inputmode="decimal" name="B5 บ่อที่ 5 (น้ำเปล่า)" placeholder="ค่า B5"></div>
-                    <div class="form-group"><label>B6 บ่อที่ 6 (น้ำเปล่า)&nbsp;*</label><input type="number" step="any" inputmode="decimal" name="B6 บ่อที่ 6 (น้ำเปล่า)" placeholder="ค่า B6"></div>
+                    <div class="form-group"><label>B1 บ่อที่ 1 (ล้างคราบไขมัน)&nbsp;*</label><input type="text" name="B1 บ่อที่1 (ล้างคราบไขมัน)" placeholder="ค่า B1"></div>
+                    <div class="form-group"><label>B2 บ่อที่ 2 (น้ำเปล่า)&nbsp;*</label><input type="text" name="B2 บ่อที่ 2 (น้ำเปล่า)" placeholder="ค่า B2"></div>
+                    <div class="form-group"><label>B3 บ่อที่ 3 (น้ำเปล่า)&nbsp;*</label><input type="text" name="B3 บ่อที่ 3 (น้ำเปล่า)" placeholder="ค่า B3"></div>
+                    <div class="form-group"><label>B4 บ่อที่ 4 (เคลือบเซอร์โคเนียม)&nbsp;*</label><input type="text" name="B4 บ่อที่ 4 (เคลือบเซอร์โคเนียม)" placeholder="ค่า B4"></div>
+                    <div class="form-group"><label>B5 บ่อที่ 5 (น้ำเปล่า)&nbsp;*</label><input type="text" name="B5 บ่อที่ 5 (น้ำเปล่า)" placeholder="ค่า B5"></div>
+                    <div class="form-group"><label>B6 บ่อที่ 6 (น้ำเปล่า)&nbsp;*</label><input type="text" name="B6 บ่อที่ 6 (น้ำเปล่า)" placeholder="ค่า B6"></div>
                 </div>
             </div>
         </div>
@@ -478,89 +407,16 @@
 
     </form>
 
-    <!-- หน้าที่ 8: แดชบอร์ดข้อมูล QC แบบเรียลไทม์ ดึงสดจาก Google Sheet -->
-    <div class="form-content dashboard-view" id="dashboardView">
-        <div class="card dashboard-card">
-            <div class="dash-header">
-                <div class="section-title" style="margin-bottom:0;">แดชบอร์ด QC</div>
-                <button type="button" class="icon-btn" onclick="fetchDashboardData()" title="รีเฟรชตอนนี้">🔄</button>
-            </div>
-            <div class="dash-meta">
-                <span class="dash-live-dot" id="dashboardLiveDot"></span>
-                <span id="dashboardUpdated">กำลังโหลดข้อมูล...</span>
-            </div>
-            <div class="dash-error" id="dashboardError" style="display:none;">
-                ดึงข้อมูลจาก Google Sheet ไม่สำเร็จ ตรวจสอบว่าเปิดสิทธิ์ "ดูได้ทุกคนที่มีลิงก์" แล้ว หรือลองกดรีเฟรชอีกครั้ง
-            </div>
-
-            <div class="dash-kpi-grid">
-                <div class="dash-kpi">
-                    <div class="dash-kpi-value" id="kpiTotal">-</div>
-                    <div class="dash-kpi-label">งานทั้งหมด</div>
-                </div>
-                <div class="dash-kpi">
-                    <div class="dash-kpi-value" id="kpiToday">-</div>
-                    <div class="dash-kpi-label">วันนี้</div>
-                </div>
-                <div class="dash-kpi">
-                    <div class="dash-kpi-value" id="kpiUNI">-</div>
-                    <div class="dash-kpi-label">ผ่าน UNI</div>
-                </div>
-                <div class="dash-kpi">
-                    <div class="dash-kpi-value" id="kpiCUR">-</div>
-                    <div class="dash-kpi-label">ผ่าน CUR</div>
-                </div>
-            </div>
-
-            <div class="dash-section-title">ผลตรวจคุณภาพสี</div>
-            <div class="dash-bar-row">
-                <div class="dash-bar-label">UNI</div>
-                <div class="dash-bar-track"><div class="dash-bar-fill pass" id="barUNI" style="width:0%;"></div></div>
-                <div class="dash-bar-count" id="countUNI">0/0</div>
-            </div>
-            <div class="dash-bar-row">
-                <div class="dash-bar-label">CUR</div>
-                <div class="dash-bar-track"><div class="dash-bar-fill pass" id="barCUR" style="width:0%;"></div></div>
-                <div class="dash-bar-count" id="countCUR">0/0</div>
-            </div>
-
-            <div class="dash-section-title">ความหนาสีเฉลี่ย (ไมครอน)</div>
-            <div class="dash-bar-row">
-                <div class="dash-bar-label">TH1</div>
-                <div class="dash-bar-track"><div class="dash-bar-fill th" id="barTH1" style="width:0%;"></div></div>
-                <div class="dash-bar-count" id="valTH1">-</div>
-            </div>
-            <div class="dash-bar-row">
-                <div class="dash-bar-label">TH2</div>
-                <div class="dash-bar-track"><div class="dash-bar-fill th" id="barTH2" style="width:0%;"></div></div>
-                <div class="dash-bar-count" id="valTH2">-</div>
-            </div>
-            <div class="dash-bar-row">
-                <div class="dash-bar-label">TH3</div>
-                <div class="dash-bar-track"><div class="dash-bar-fill th" id="barTH3" style="width:0%;"></div></div>
-                <div class="dash-bar-count" id="valTH3">-</div>
-            </div>
-
-            <div class="dash-section-title">รายการล่าสุด</div>
-            <div class="dash-recent" id="dashboardRecent">
-                <div class="dash-empty">ยังไม่มีข้อมูล</div>
-            </div>
-        </div>
-    </div>
-
     <div class="bottom-bar">
-        <div class="bottom-bar-inner" id="normalBottomBar">
+        <div class="bottom-bar-inner">
             <button type="button" class="action-btn btn-prev" id="btnPrev" onclick="changeStep(-1)" style="display:none;">ย้อนกลับ</button>
             <button type="button" class="action-btn btn-next" id="btnNext" onclick="changeStep(1)">ถัดไป</button>
-        </div>
-        <div class="bottom-bar-inner" id="dashboardBottomBar" style="display:none;">
-            <button type="button" class="action-btn btn-prev" onclick="closeDashboard()">ปิดแดชบอร์ด</button>
         </div>
     </div>
 </div>
 
 <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx1r-XfV4_EaNtoL766kxbtQYzij000QgUBArVGp5j1stVL3elY0-DLS0ZcvVScSdn8/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyOdZXeWxBaX1MzFr2KrnncN5_icYU6BsEUircoWc-mGFbcNYknrusrxWIh0V_5sO3a/exec";
 
     let currentStep = 0;
     const steps = document.querySelectorAll(".step-page");
@@ -582,22 +438,6 @@
         // แตะพื้นหลังนอกกล่องเพื่อปิด (ไม่ปิดถ้าแตะในกล่อง)
         document.getElementById('addNameModal').addEventListener('click', function(e) {
             if (e.target === this) closeAddNameModal();
-        });
-
-        // ป้องกันไม่ให้กรอกตัวอักษร e/E/+/- ในช่องตัวเลขทุกช่อง (เบราว์เซอร์ยอมให้พิมพ์ "e" ใน
-        // input type="number" ได้ตามปกติ เพราะรองรับเลขแบบ scientific notation เช่น 1e5 ซึ่งไม่ตรงกับ
-        // การใช้งานของฟอร์มนี้ที่ต้องการแค่ตัวเลข/ทศนิยมล้วนๆ)
-        document.querySelectorAll('input[type="number"]').forEach(function (inp) {
-            inp.addEventListener('keydown', function (e) {
-                if (e.key === 'e' || e.key === 'E' || e.key === '+' || e.key === '-') {
-                    e.preventDefault();
-                }
-            });
-            // เผื่อกรณีวาง (paste) ข้อความที่มีตัวอักษรเหล่านี้ปนมาด้วย
-            inp.addEventListener('input', function () {
-                const cleaned = this.value.replace(/[eE+\-]/g, '');
-                if (cleaned !== this.value) this.value = cleaned;
-            });
         });
     });
 
@@ -716,149 +556,11 @@
 
     function goHome() {
         if (confirm("ต้องการกลับไปหน้าแรกและล้างข้อมูลที่กรอกไว้หรือไม่?")) {
-            if (document.getElementById('dashboardView').classList.contains('active')) {
-                closeDashboard();
-            }
             document.getElementById('qcAppForm').reset();
             document.getElementById('recordDate').value = new Date().toISOString().split('T')[0];
             document.querySelectorAll(".toggle-btn").forEach(btn => btn.classList.remove('active'));
             currentStep = 0;
             showStep(currentStep);
-        }
-    }
-
-    // ===== หน้าที่ 8: แดชบอร์ด QC แบบเรียลไทม์ (ดึงข้อมูลผ่าน Apps Script Web App เอง — action=getRecords) =====
-    const DASHBOARD_REFRESH_MS = 30000; // รีเฟรชอัตโนมัติทุก 30 วินาที
-
-    let dashboardTimer = null;
-    let dashboardPrevStep = 0;
-
-    function openDashboard() {
-        dashboardPrevStep = currentStep;
-        document.getElementById('qcAppForm').style.display = 'none';
-        document.getElementById('dashboardView').classList.add('active');
-        document.getElementById('progressContainer').style.display = 'none';
-        document.getElementById('normalBottomBar').style.display = 'none';
-        document.getElementById('dashboardBottomBar').style.display = 'flex';
-        document.getElementById('stepIndicator').innerText = 'แดชบอร์ด';
-
-        fetchDashboardData();
-        if (dashboardTimer) clearInterval(dashboardTimer);
-        dashboardTimer = setInterval(fetchDashboardData, DASHBOARD_REFRESH_MS);
-    }
-
-    function closeDashboard() {
-        if (dashboardTimer) { clearInterval(dashboardTimer); dashboardTimer = null; }
-        document.getElementById('dashboardView').classList.remove('active');
-        document.getElementById('qcAppForm').style.display = '';
-        document.getElementById('progressContainer').style.display = '';
-        document.getElementById('normalBottomBar').style.display = 'flex';
-        document.getElementById('dashboardBottomBar').style.display = 'none';
-        currentStep = dashboardPrevStep;
-        showStep(currentStep);
-    }
-
-    function escapeHtml(str) {
-        return String(str)
-            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-    }
-
-    async function fetchDashboardData() {
-        const dot = document.getElementById('dashboardLiveDot');
-        const updatedEl = document.getElementById('dashboardUpdated');
-        const errorEl = document.getElementById('dashboardError');
-        try {
-            const url = `${SCRIPT_URL}?action=getRecords`;
-            const res = await fetch(url, { cache: 'no-store' });
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            const records = await res.json();
-            if (!Array.isArray(records)) {
-                throw new Error((records && records.message) || 'รูปแบบข้อมูลไม่ถูกต้อง');
-            }
-
-            renderDashboard(records);
-
-            dot.classList.remove('offline');
-            errorEl.style.display = 'none';
-            updatedEl.innerText = 'อัปเดตล่าสุด ' + new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        } catch (e) {
-            console.error('โหลดข้อมูลแดชบอร์ดไม่สำเร็จ', e);
-            dot.classList.add('offline');
-            errorEl.style.display = 'block';
-            updatedEl.innerText = 'โหลดข้อมูลไม่สำเร็จ';
-        }
-    }
-
-    // records: array ของ object ที่ได้จาก Code.gs (action=getRecords) — key คือชื่อคอลัมน์ตรงกับหัวตารางใน Sheet เป๊ะๆ
-    function renderDashboard(records) {
-        const fJob = 'Job No.';
-        const fName = 'ชื่อ-นามสกุล';
-        const fDate = 'Date';
-        const fUNI = 'ความแน่นของสีที่พ่น (UNI)';
-        const fCUR = 'ความคงทนสี (CUR)';
-        const fTH1 = 'ส่วนบน (TH1)';
-        const fTH2 = 'ส่วนกลาง (TH2)';
-        const fTH3 = 'ส่วนล่าง (TH3)';
-
-        const total = records.length;
-        document.getElementById('kpiTotal').innerText = total;
-
-        const todayStr = new Date().toISOString().slice(0, 10);
-        const todayCount = records.filter(r => String(r[fDate] || '').slice(0, 10) === todayStr).length;
-        document.getElementById('kpiToday').innerText = todayCount;
-
-        function passFailCount(field) {
-            const vals = records.map(r => r[field]).filter(v => v !== '' && v != null).map(String);
-            if (!vals.length) return null;
-            const pass = vals.filter(v => v.indexOf('ไม่ผ่าน') === -1 && v.indexOf('ผ่าน') !== -1).length;
-            return { pass: pass, total: vals.length, rate: Math.round((pass / vals.length) * 100) };
-        }
-
-        const uni = passFailCount(fUNI);
-        const cur = passFailCount(fCUR);
-        document.getElementById('kpiUNI').innerText = uni ? uni.rate + '%' : '-';
-        document.getElementById('kpiCUR').innerText = cur ? cur.rate + '%' : '-';
-        document.getElementById('barUNI').style.width = (uni ? uni.rate : 0) + '%';
-        document.getElementById('barCUR').style.width = (cur ? cur.rate : 0) + '%';
-        document.getElementById('countUNI').innerText = uni ? `${uni.pass}/${uni.total}` : '0/0';
-        document.getElementById('countCUR').innerText = cur ? `${cur.pass}/${cur.total}` : '0/0';
-
-        function avgVal(field) {
-            const nums = records.map(r => parseFloat(r[field])).filter(n => !isNaN(n));
-            if (!nums.length) return null;
-            return nums.reduce((a, b) => a + b, 0) / nums.length;
-        }
-        const avgs = [avgVal(fTH1), avgVal(fTH2), avgVal(fTH3)];
-        const maxAvg = Math.max(1, ...avgs.filter(v => v !== null));
-        [['barTH1', 'valTH1', avgs[0]], ['barTH2', 'valTH2', avgs[1]], ['barTH3', 'valTH3', avgs[2]]].forEach(([barId, valId, v]) => {
-            document.getElementById(barId).style.width = (v !== null ? (v / maxAvg * 100) : 0) + '%';
-            document.getElementById(valId).innerText = v !== null ? v.toFixed(1) : '-';
-        });
-
-        const recentEl = document.getElementById('dashboardRecent');
-        const recent = records.slice(-8).reverse();
-        if (!recent.length) {
-            recentEl.innerHTML = '<div class="dash-empty">ยังไม่มีข้อมูล</div>';
-        } else {
-            function pill(label, v) {
-                if (v === '' || v == null) return '';
-                v = String(v);
-                const cls = v.indexOf('ไม่ผ่าน') !== -1 ? 'fail' : (v.indexOf('ผ่าน') !== -1 ? 'pass' : 'unknown');
-                return `<span class="dr-pill ${cls}">${escapeHtml(label)} ${escapeHtml(v)}</span>`;
-            }
-            recentEl.innerHTML = recent.map(r => {
-                const job = r[fJob] || '';
-                const nm = r[fName] || '';
-                const dt = String(r[fDate] || '').slice(0, 10);
-                return `<div class="dash-record">
-                    <div class="dr-main">
-                        <div class="dr-job">${escapeHtml(job || '-')}${nm ? ' · ' + escapeHtml(nm) : ''}</div>
-                        <div class="dr-date">${escapeHtml(dt)}</div>
-                    </div>
-                    <div class="dr-status">${pill('UNI', r[fUNI])}${pill('CUR', r[fCUR])}</div>
-                </div>`;
-            }).join('');
         }
     }
 
