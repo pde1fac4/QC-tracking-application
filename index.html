@@ -441,10 +441,10 @@
         });
     });
 
-    // ===== ล็อกให้ช่องตัวเลขกรอกได้เฉพาะตัวเลข (และจุดทศนิยม 1 จุด) ห้ามพิมพ์ e/E/+/- หรืออักษรอื่นๆ =====
+    // ===== ล็อกให้ช่องตัวเลขกรอกได้เฉพาะตัวเลข จุดทศนิยม 1 จุด และเครื่องหมายลบ (นำหน้าค่าติดลบ) เท่านั้น ห้ามพิมพ์ e/E/+ หรืออักษรอื่นๆ =====
     function setupNumericInputs() {
         document.querySelectorAll('.numeric-input').forEach(function (input) {
-            // กันปุ่มที่พิมพ์ได้ทันทีตอนกด เช่น e, E, +, -, ตัวอักษร (ทำงานกับคีย์บอร์ดจริง)
+            // กันปุ่มที่พิมพ์ได้ทันทีตอนกด เช่น e, E, +, ตัวอักษร (ทำงานกับคีย์บอร์ดจริง)
             input.addEventListener('keydown', function (e) {
                 const allowedKeys = ['Backspace', 'Delete', 'Tab', 'Escape', 'Enter',
                     'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
@@ -452,10 +452,12 @@
                 if (e.ctrlKey || e.metaKey) return; // อนุญาต Ctrl/Cmd+C/V/A ฯลฯ
                 if (e.key >= '0' && e.key <= '9') return;
                 if (e.key === '.' && !e.target.value.includes('.')) return;
+                // อนุญาต "-" ได้แค่ตัวเดียว และต้องอยู่ตำแหน่งหน้าสุดของค่าเท่านั้น (เครื่องหมายลบของค่าติดลบ)
+                if (e.key === '-' && e.target.selectionStart === 0 && e.target.selectionEnd === 0 && !e.target.value.includes('-')) return;
                 e.preventDefault();
             });
 
-            // ดักการวาง (paste) ให้เหลือแต่ตัวเลขกับจุดทศนิยม
+            // ดักการวาง (paste) ให้เหลือแต่ตัวเลข จุดทศนิยม และเครื่องหมายลบนำหน้า
             input.addEventListener('paste', function (e) {
                 e.preventDefault();
                 const text = (e.clipboardData || window.clipboardData).getData('text');
@@ -471,14 +473,15 @@
         });
     }
 
-    // ล้างสตริงให้เหลือเฉพาะ 0-9 และจุดทศนิยม (อนุญาตแค่จุดเดียว)
+    // ล้างสตริงให้เหลือเฉพาะ 0-9, จุดทศนิยม (อนุญาตแค่จุดเดียว) และเครื่องหมายลบนำหน้า (อนุญาตแค่ตัวเดียว อยู่หน้าสุด)
     function sanitizeNumericString(str) {
+        const isNegative = str.charAt(0) === '-';
         let cleaned = str.replace(/[^0-9.]/g, '');
         const firstDot = cleaned.indexOf('.');
         if (firstDot !== -1) {
             cleaned = cleaned.slice(0, firstDot + 1) + cleaned.slice(firstDot + 1).replace(/\./g, '');
         }
-        return cleaned;
+        return (isNegative ? '-' : '') + cleaned;
     }
 
     setupNumericInputs();
