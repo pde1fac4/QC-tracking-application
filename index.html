@@ -168,6 +168,18 @@
         .toggle-btn.pass.active { background-color: var(--pass-color); color: #FFFFFF; }
         .toggle-btn.fail.active { background-color: var(--fail-color); color: #FFFFFF; }
 
+        /* ปุ่ม "±" สำหรับสลับเครื่องหมายบวก/ลบของช่องตัวเลข - จำเป็นเพราะคีย์บอร์ดตัวเลขบนมือถือ
+           (inputmode="decimal") ส่วนใหญ่ไม่มีปุ่ม "-" ให้กด ต้องมีปุ่มแยกไว้กดแทน */
+        .numeric-input-wrap { display: flex; gap: 8px; align-items: stretch; width: 100%; }
+        .numeric-input-wrap .numeric-input { flex: 1; min-width: 0; }
+        .numeric-sign-btn {
+            flex-shrink: 0; width: 40px; border: 1.5px solid var(--border); border-radius: 9px;
+            background-color: var(--input-bg); color: var(--text-muted); font-size: 18px; font-weight: 700;
+            cursor: pointer; transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+        .numeric-sign-btn:hover { border-color: var(--primary); }
+        .numeric-sign-btn.active { background-color: var(--primary); border-color: var(--primary); color: #FFFFFF; }
+
         /* 2 คอลัมน์ พร้อม align-items: end เพื่อให้ช่องกรอกในแถวเดียวกันชิดขอบล่างเท่ากันเสมอ
            แม้บาง label ภาษาไทยจะยาวจนขึ้น 2 บรรทัดก็ตาม - ใช้ 2 คอลัมน์เพื่อประหยัดพื้นที่แนวตั้ง
            ให้ทุกฟิลด์ในหน้าเดียวพอดีกับจอมือถือโดยไม่ต้องเลื่อน */
@@ -442,9 +454,39 @@
     });
 
     // ===== ล็อกให้ช่องตัวเลขกรอกได้เฉพาะตัวเลข จุดทศนิยม 1 จุด และเครื่องหมายลบ (นำหน้าค่าติดลบ) เท่านั้น ห้ามพิมพ์ e/E/+ หรืออักษรอื่นๆ =====
+    // หมายเหตุ: คีย์บอร์ดตัวเลขบนมือถือส่วนใหญ่ (inputmode="decimal") ไม่มีปุ่ม "-" ให้กดเลย
+    // (มีแค่ 0-9 กับจุดทศนิยม) ดังนั้นการดักจับปุ่มคีย์บอร์ดอย่างเดียวจะใช้ไม่ได้ผลบนมือถือ
+    // จึงเพิ่มปุ่ม "±" ข้างช่องกรอกไว้ให้กดสลับค่าบวก/ลบแทน ใช้ได้ทั้งคอมพิวเตอร์และมือถือ
     function setupNumericInputs() {
         document.querySelectorAll('.numeric-input').forEach(function (input) {
-            // กันปุ่มที่พิมพ์ได้ทันทีตอนกด เช่น e, E, +, ตัวอักษร (ทำงานกับคีย์บอร์ดจริง)
+            // ห่อ input ด้วย wrapper แล้วแทรกปุ่ม "±" ต่อท้าย เพื่อสลับเครื่องหมายลบแบบกดปุ่ม
+            const wrap = document.createElement('div');
+            wrap.className = 'numeric-input-wrap';
+            input.parentNode.insertBefore(wrap, input);
+            wrap.appendChild(input);
+
+            const signBtn = document.createElement('button');
+            signBtn.type = 'button';
+            signBtn.className = 'numeric-sign-btn';
+            signBtn.textContent = '±';
+            signBtn.setAttribute('aria-label', 'สลับเครื่องหมายบวก/ลบ');
+            wrap.appendChild(signBtn);
+
+            const syncSignBtn = function () {
+                signBtn.classList.toggle('active', input.value.charAt(0) === '-');
+            };
+
+            signBtn.addEventListener('click', function () {
+                if (input.value.charAt(0) === '-') {
+                    input.value = input.value.slice(1);
+                } else {
+                    input.value = '-' + input.value;
+                }
+                syncSignBtn();
+                input.focus();
+            });
+
+            // กันปุ่มที่พิมพ์ได้ทันทีตอนกด เช่น e, E, +, ตัวอักษร (ทำงานกับคีย์บอร์ดจริงบนคอมพิวเตอร์)
             input.addEventListener('keydown', function (e) {
                 const allowedKeys = ['Backspace', 'Delete', 'Tab', 'Escape', 'Enter',
                     'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
@@ -465,10 +507,11 @@
                 document.execCommand('insertText', false, sanitized);
             });
 
-            // กันเคสหลุดรอด เช่น คีย์บอร์ดมือถือ/ลากวางที่ไม่ผ่าน keydown
+            // กันเคสหลุดรอด เช่น คีย์บอร์ดมือถือ/ลากวางที่ไม่ผ่าน keydown แล้วซิงก์สถานะปุ่ม ±
             input.addEventListener('input', function () {
                 const cleaned = sanitizeNumericString(input.value);
                 if (cleaned !== input.value) input.value = cleaned;
+                syncSignBtn();
             });
         });
     }
